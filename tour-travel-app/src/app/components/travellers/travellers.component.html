@@ -1,0 +1,47 @@
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div>
+                <h3> Welcome Traveller ! </h3>
+            </div>
+            <div class="navbar navbar-right">
+                <button type="button" (click)="onSignOut()">Sign Out</button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="margin"><button (click)="catalogClicked = true; bookingsClicked = !catalogClicked">Catalogue</button></li>
+                    <li class="margin"><button (click)="bookingsClicked=true;catalogClicked=false;getBookings()">My Bookings</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div *ngIf="bookingsClicked">
+        <h1>My Bookings</h1>
+        <ul class="list-group">
+            <div *ngFor="let booking of bookingDetails">
+                <div class="list-group-item">
+                    <h5>Name: {{booking.name}}</h5>
+                    <p>Departure: {{booking.departure}}</p>
+                    <p>Arrival: {{booking.arrival}}</p>
+                    <p>Number of days: {{booking.number_of_days}}</p>
+                    <button (click)="deleteBookings(booking._id)">Cancel Booking</button>
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div *ngIf="catalogClicked">
+        <h1>Travel Packages</h1>
+        <ul class="list-group">
+            <div *ngFor="let catalog of catalogues">
+                <div class="list-group-item">
+                    <h5>Name: {{catalog.name}}</h5>
+                    <p>Departure: {{catalog.departure}}</p>
+                    <p>Arrival: {{catalog.arrival}}</p>
+                    <p>Number of days: {{catalog.number_of_days}}</p>
+                    <p>Cost: {{catalog.price_per_person}}</p>
+                    <button (click)="postBookings(catalog._id)">Book</button>
+                </div>
+            </div>
+        </ul>
+    </div>
+</div>

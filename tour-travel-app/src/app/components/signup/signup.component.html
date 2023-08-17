@@ -1,0 +1,24 @@
+<div>
+  <h3>Create Account</h3>
+  <form>
+    <div>
+      <input type="text" class="margin" placeholder="Email" #email required />
+      <br>
+      <input type="password" class="margin" placeholder="Password" #password required />
+      <br>
+      <div>
+        <select #category class="margin">
+          <option value="traveller">Traveller</option>
+          <option value="propertyOwner">PropertyOwner</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div>
+      <button type="button" class="btn btnPrimary margin" (click)="onSignUp(email.value, password.value, category.value)">Sign Up</button>
+      <br>
+      <button class="btn btnPrimary margin" routerLink="/sign-in">Log In</button>
+    </div>
+  </form>
+</div>

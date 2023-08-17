@@ -1,0 +1,16 @@
+<div>
+  <h3>Log In</h3>
+  <form>
+    <div>
+      <input type="text" class="margin" placeholder="Email" #email required />
+      <br>
+      <input type="password" class="margin" placeholder="Password" #password required />
+    </div>
+    <br>
+    <div>
+      <button type="button" class="btn btnPrimary margin" (click)="onLogin(email.value, password.value)">Log In</button>
+      <br>
+      <button class="btn btnPrimary margin" routerLink="/create-account">Create Account</button>
+    </div>
+  </form>
+</div>
