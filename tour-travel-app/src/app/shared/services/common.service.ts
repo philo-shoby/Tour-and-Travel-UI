@@ -3,7 +3,7 @@ import { User } from './user';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
-const URL= 'http://localhost:3000/';
+const URL= 'https://api-u4nj4jf4wq-uc.a.run.app/';
 
 @Injectable({
   providedIn: 'root'

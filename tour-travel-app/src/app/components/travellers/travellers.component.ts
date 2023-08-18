@@ -5,7 +5,7 @@ import { User } from 'src/app/shared/services/user';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
-const URL= 'http://localhost:3000/';
+const URL= 'https://api-u4nj4jf4wq-uc.a.run.app/';
 
 @Component({
   selector: 'app-travellers',

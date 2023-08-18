@@ -18,7 +18,6 @@ export class SignupComponent {
     try {
       this.authService.SignUp(email,password,category)
       .then(() => {
-        window.alert('Created Account succesfully !')
         this.router.navigate(['sign-in']);
       });
       

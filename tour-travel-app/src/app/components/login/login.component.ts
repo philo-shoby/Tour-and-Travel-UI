@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
-const URL= 'http://localhost:3000/';
+const URL= 'https://api-u4nj4jf4wq-uc.a.run.app/';
 
 @Component({
   selector: 'app-login',

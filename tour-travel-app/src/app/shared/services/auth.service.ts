@@ -5,7 +5,7 @@ import { AngularFirestore,} from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 
-const URL= 'http://localhost:3000/';
+const URL= 'https://api-u4nj4jf4wq-uc.a.run.app/';
 
 @Injectable({
   providedIn: 'root',
@@ -95,14 +95,18 @@ export class AuthService {
     try {
       let headers;
       if (this.userData) {
-        this.userData.getIdToken()
-        .then((idToken: any) => {
-          headers = {Authorization: `Bearer ${idToken}`};
-        })
-      } 
-      this.http.post(URL + 'users', user, { headers: headers}).subscribe((response) => {
-        console.log(response);
-      })
+        if (this.userData) {
+          this.userData.getIdToken()
+          .then((idToken: any) => {
+            return headers = {Authorization: ` ${idToken}`};
+          })
+          .then((headers: any) => {
+            this.http.post(URL + 'users', user, { headers: headers}).subscribe((response) => {
+              console.log(response);
+            })
+          })
+        } 
+      }   
     } catch (error) {
       console.error(error);
     }
