@@ -20,7 +20,6 @@ export class SignupComponent {
       .then(() => {
         this.router.navigate(['sign-in']);
       });
-      
     } catch (error) {
       
     }

@@ -6,7 +6,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 
 const URL= 'https://api-u4nj4jf4wq-uc.a.run.app/';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -55,7 +54,7 @@ export class AuthService {
   }
 
   // Sign up with email/password
-  SignUp(email: string, password: string, category: any) {
+  SignUp(email: string, password: string, category: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result : any) => {
@@ -64,7 +63,8 @@ export class AuthService {
           email: result.user.email,
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
-          emailVerified: result.user.emailVerified,          
+          emailVerified: result.user.emailVerified,
+          category: category          
         };
         this.updateUserDb(userData);
         return result.user;
@@ -91,21 +91,19 @@ export class AuthService {
   }
 
   // Update the user details in mongodb
-  updateUserDb(user: User) {
+  updateUserDb(user: any) {
     try {
       let headers;
       if (this.userData) {
-        if (this.userData) {
-          this.userData.getIdToken()
-          .then((idToken: any) => {
-            return headers = {Authorization: ` ${idToken}`};
+        this.userData.getIdToken()
+        .then((idToken: any) => {
+          return headers = {Authorization: ` ${idToken}`};
+        })
+        .then((headers: any) => {
+          this.http.post(URL + 'users', user, { headers: headers}).subscribe((response) => {
+            console.log(response);
           })
-          .then((headers: any) => {
-            this.http.post(URL + 'users', user, { headers: headers}).subscribe((response) => {
-              console.log(response);
-            })
-          })
-        } 
+        })        
       }   
     } catch (error) {
       console.error(error);

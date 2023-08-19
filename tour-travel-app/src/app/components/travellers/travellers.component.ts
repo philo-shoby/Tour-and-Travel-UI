@@ -27,8 +27,7 @@ export class TravellersComponent implements OnInit{
     catalogId: []
   };
   
-  constructor(private http: HttpClient, public authService: AuthService, private commonService: CommonService,
-    private afAuth: AngularFireAuth) {}
+  constructor(private http: HttpClient, public authService: AuthService, private commonService: CommonService) {}
 
   ngOnInit() {
     this.getCatalogue();
@@ -75,21 +74,19 @@ export class TravellersComponent implements OnInit{
   }
   getCatalogue() {
     try {
-      let headers;
+      let sampleHeader;
       if (this.authService.userData) {
-        if (this.authService.userData) {
-          this.authService.userData.getIdToken()
-          .then((idToken: any) => {
-            return headers = {Authorization: ` ${idToken}`};
+        this.authService.userData.getIdToken()
+        .then((idToken: any) => {
+          return sampleHeader = {Authorization: ` ${idToken}`};
+        })
+        .then((sampleHeader: any) => {
+          this.http.get(URL + 'catalogue', { headers: sampleHeader }).subscribe((response) => {
+            if (response) {
+              this.catalogues = response;
+            }
           })
-          .then((headers: any) => {
-            this.http.get(URL + 'catalogue', { headers: headers }).subscribe((response) => {
-              if (response) {
-                this.catalogues = response;
-              }
-            })
-          })
-        } 
+        })
       }        
     } catch (error) {
       console.error(error);
