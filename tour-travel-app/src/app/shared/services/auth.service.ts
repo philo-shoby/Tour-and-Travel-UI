@@ -43,10 +43,8 @@ export class AuthService {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
           emailVerified: result.user.emailVerified,
-          category: result.user.category
         };
-        this.userDetails = userData;
-        
+        this.userDetails = userData; 
       })
       .catch((error) => {
         window.alert(error.message);
@@ -66,7 +64,8 @@ export class AuthService {
           emailVerified: result.user.emailVerified,
           category: category          
         };
-        this.updateUserDb(userData);
+        this.sendVerificationMail();
+        this.createUserAccount(userData);
         return result.user;
       })
       .catch((error) => {
@@ -100,7 +99,7 @@ export class AuthService {
           return headers = {Authorization: ` ${idToken}`};
         })
         .then((headers: any) => {
-          this.http.post(URL + 'users', user, { headers: headers}).subscribe((response) => {
+          this.http.put(URL + 'users', user, { headers: headers}).subscribe((response) => {
             console.log(response);
           })
         })        
@@ -108,5 +107,23 @@ export class AuthService {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  createUserAccount(user: any) {
+    try {
+      this.http.post(URL + 'users', user).subscribe((response) => {
+        console.log(response);
+      })   
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  sendVerificationMail() {
+    return this.afAuth.currentUser
+      .then((u: any) => u.sendEmailVerification())
+      .catch((err) => {
+        window.alert(err);
+      });
   }
 }

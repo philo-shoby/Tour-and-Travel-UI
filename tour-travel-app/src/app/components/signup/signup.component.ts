@@ -14,10 +14,11 @@ export class SignupComponent {
   
   constructor(public authService: AuthService,public router: Router,) {}
 
-  onSignUp(email: string,password: string,category: any) {
+  onSignUp(email: string,password: string,category = "traveller") {
     try {
       this.authService.SignUp(email,password,category)
       .then(() => {
+        window.alert("The account is created. Kindly verify the email and login.")
         this.router.navigate(['sign-in']);
       });
     } catch (error) {

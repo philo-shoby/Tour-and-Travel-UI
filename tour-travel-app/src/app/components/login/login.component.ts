@@ -15,11 +15,14 @@ export class LoginComponent {
   constructor(public authService: AuthService, private router: Router, public http: HttpClient) {}
   
   userData: any;
-
   onLogin(email: string, password: string) {
     
     this.authService.login(email, password)
     .then(() => {
+      if (this.authService.userData && !this.authService.userData.emailVerified) {
+        window.alert("Kindly verify the email and retry logging in");
+        return;
+      }
       const queryParams = new HttpParams({ fromObject: {uid : this.authService.userDetails.uid} });
       let sampleheaders;
       if (this.authService.userData) {

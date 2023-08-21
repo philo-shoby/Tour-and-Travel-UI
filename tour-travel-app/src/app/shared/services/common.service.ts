@@ -47,7 +47,7 @@ export class CommonService {
     } 
     return this.userData;
   }
-  convertCatalogueData(responseCatalogue: any) {
+  convertCatalogueData(responseCatalogue: any= []) {
     let newCatalog = [];
     for(let cat of responseCatalogue) {
       newCatalog.push(cat);
