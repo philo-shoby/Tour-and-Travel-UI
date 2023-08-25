@@ -34,6 +34,10 @@ export class AuthService {
 
   // Sign in with email/password
   login(email: string, password: string) {
+    //const sessionDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
+    const sessionDuration = 1 * 60 * 1000;
+    const sessionExpiry = Date.now() + sessionDuration;
+
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result: any) => {
@@ -45,6 +49,7 @@ export class AuthService {
           emailVerified: result.user.emailVerified,
         };
         this.userDetails = userData; 
+        localStorage.setItem('sessionTimeout', JSON.stringify(sessionExpiry));
       })
       .catch((error) => {
         window.alert(error.message);
@@ -77,14 +82,20 @@ export class AuthService {
   // Returns true when user is logged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
-    return user !== null ? true : false;
+    if (!user || this.isSessionExpired()) {
+      this.SignOut();
+      return false;
+    }
+    return true;
   }
 
   
   // Sign out
   SignOut() {
+    window.alert("Session Timeout, please log in again!");
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
+      localStorage.removeItem('sessionTimeout');
       this.router.navigate(['sign-in']);
     });
   }
@@ -93,7 +104,7 @@ export class AuthService {
   updateUserDb(user: any) {
     try {
       let headers;
-      if (this.userData) {
+      if (this.userData && this.isLoggedIn) {
         this.userData.getIdToken()
         .then((idToken: any) => {
           return headers = {Authorization: ` ${idToken}`};
@@ -125,5 +136,13 @@ export class AuthService {
       .catch((err) => {
         window.alert(err);
       });
+  }
+
+  isSessionExpired(): boolean {
+    const storedData = JSON.parse(localStorage.getItem('sessionTimeout')!);
+    if (storedData) {
+      return Date.now() > storedData;
+    }
+    return true; // If sessionExpiry is not present or user data is not present, consider session expired
   }
 }

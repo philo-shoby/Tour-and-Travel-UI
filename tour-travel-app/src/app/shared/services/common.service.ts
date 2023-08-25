@@ -25,7 +25,7 @@ export class CommonService {
   getUserData(userId: string) {
     const reqBody = new HttpParams({ fromObject: {uid : userId } });
     let headers;
-    if (this.authService.userData) {
+    if (this.authService.userData && this.authService.isLoggedIn) {
       this.authService.userData.getIdToken()
       .then((idToken: any) => {
         return headers = {Authorization: `${idToken}`};

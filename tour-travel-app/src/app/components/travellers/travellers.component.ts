@@ -75,7 +75,7 @@ export class TravellersComponent implements OnInit{
   getCatalogue() {
     try {
       let sampleHeader;
-      if (this.authService.userData) {
+      if (this.authService.userData && this.authService.isLoggedIn) {
         this.authService.userData.getIdToken()
         .then((idToken: any) => {
           return sampleHeader = {Authorization: ` ${idToken}`};
